@@ -9,7 +9,7 @@ module Apipie
     def full_url(path)
       unless @url_prefix
         @url_prefix = ""
-        if rails_prefix = ENV["RAILS_RELATIVE_URL_ROOT"]
+        if rails_prefix =  Rails.application.config.relative_url_root
           @url_prefix << rails_prefix
         end
         @url_prefix << Apipie.configuration.doc_base_url
