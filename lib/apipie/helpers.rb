@@ -7,13 +7,7 @@ module Apipie
     attr_accessor :url_prefix
 
     def full_url(path)
-      unless @url_prefix
-        @url_prefix = ""
-        if rails_prefix =  Rails.application.config.relative_url_root
-          @url_prefix << rails_prefix
-        end
-        @url_prefix << Apipie.configuration.doc_base_url
-      end
+      @url_prefix ||= (Rails.application.routes.url_helpers.root_path + Apipie.configuration.doc_base_url).gsub(/\/+/, "/")
       path = path.sub(/^\//,"")
       ret = "#{@url_prefix}/#{path}"
       ret.insert(0,"/") unless ret =~ /\A[.\/]/
